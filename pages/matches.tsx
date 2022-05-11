@@ -1,11 +1,7 @@
 import { FC, useEffect } from "react";
 import create from "zustand";
 import { SERVER_EVENTS } from "./ranking";
-import { Match, socket, Team } from "./_app";
-
-interface LocalMatch extends Match {
-	index: number;
-}
+import { Match, socket } from "./_app";
 
 type State = {
 	matches: Match[];
@@ -14,17 +10,17 @@ type State = {
 
 const state = create<State>((set) => ({
 	matches: [],
-	update: (matches) => set({ matches: matches.sort((a, b) => a.id - b.id) }),
+	update: (matches) => set({ matches: matches.sort((a, b) => b.id - a.id) }),
 }));
 
 const Matches: FC = () => {
 	const { matches, update } = state();
 
-	socket.on(SERVER_EVENTS.UPDATE_MATCHES, ({ matches }) => {
-		update(matches);
-	});
-
 	useEffect(() => {
+		socket.on(SERVER_EVENTS.UPDATE_MATCHES, ({ matches }) => {
+			update(matches);
+		});
+
 		socket.emit("update");
 	}, []);
 
@@ -47,7 +43,7 @@ const Matches: FC = () => {
 			<div className="flex justify-center w-full mt-20">
 				<div className="flex flex-col space-y-5 w-[100]">
 					{matches != null && matches.length > 0 ? (
-						matches.map((props, index) => <Match {...props} index={index} />)
+						matches.map((props, index) => <Match {...props} />)
 					) : (
 						<div className="text-center">OFFLINE {":("}</div>
 					)}
@@ -57,11 +53,11 @@ const Matches: FC = () => {
 	);
 };
 
-const Match: FC<LocalMatch> = (match: LocalMatch) => {
+const Match: FC<Match> = (match: Match) => {
 	return (
 		<div className="p-6 text-white rounded-xl bg-slate-300">
 			<p className="mb-3 text-4xl font-bold text-left text-black">
-				Qual {match.index + 1}
+				Qual {match.id}
 			</p>
 
 			<div className="flex space-x-3">
