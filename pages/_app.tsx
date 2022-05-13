@@ -4,11 +4,20 @@ import "tailwindcss/tailwind.css";
 import { Manager } from "socket.io-client";
 
 import type { AppProps } from "next/app";
+import create from "zustand";
+import { useLayoutEffect } from "react";
+import { SERVER_EVENTS } from "./ranking";
 
 export type Team = {
-	id: number;
+	id: string;
 	name: string;
+	iconUrl: string;
+	ap: number;
 	rankingPoints: number;
+	won: number;
+	loss: number;
+	createdAt: Date | null;
+	totalPoints: number;
 };
 
 export type Match = {
@@ -33,6 +42,23 @@ export type Match = {
 	blueEndScore: number;
 	redEndScore: number;
 };
+
+type RankingState = {
+	teams: Team[];
+	update: (t: Team[]) => void;
+};
+
+export const rankingState = create<RankingState>((set) => ({
+	teams: [],
+	update: (teams) =>
+		set({
+			teams: teams.sort((a, b) =>
+				b.won / b.loss != a.won / a.loss
+					? b.won / b.loss - a.won / a.loss
+					: b.totalPoints - a.totalPoints
+			),
+		}),
+}));
 
 export const socket = new Manager(
 	process.env.WS_URL || "http://localhost:3001",
