@@ -38,11 +38,6 @@ const Matches: FC = () => {
 			<div className="flex justify-center w-full mt-20">
 				<div className="flex flex-col space-y-5 w-[120]">
 					<MatchesTable Matches={matches} />
-					{/* {matches != null && matches.length > 0 ? (
-						matches.map((props, index) => <Match {...props} key={props.id} />)
-					) : (
-						<div className="text-center">OFFLINE {":("}</div>
-					)} */}
 				</div>
 			</div>
 		</div>
@@ -60,7 +55,7 @@ const MatchesTable: FC<{ Matches: Match[] }> = ({ Matches }) => {
 					<button
 						onClick={() => socket.emit("update")}
 						type="button"
-						className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-black bg-white border rounded-md shadow-sm border-grey-200 hover:bg-grey-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+						className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-black bg-white border rounded-md shadow-sm border-grey-200 hover:bg-grey-300 focus:outline-none focus:ring-2 focus:ring-grey-500 focus:ring-offset-2 sm:w-auto"
 					>
 						Reload
 					</button>
@@ -114,9 +109,7 @@ const MatchesTable: FC<{ Matches: Match[] }> = ({ Matches }) => {
 										"relative py-4 pl-4 sm:pl-6 pr-3 text-sm"
 									)}
 								>
-									<div className="font-medium text-gray-900">
-										#{match.id + 1}
-									</div>
+									<div className="font-medium text-gray-900">#{match.id}</div>
 								</td>
 								<td
 									className={classNames(

@@ -1,5 +1,5 @@
+import { useRouter } from "next/router";
 import { FC, useEffect, useState } from "react";
-import create from "zustand";
 
 import { rankingState, socket, Team } from "./_app";
 
@@ -14,13 +14,14 @@ export const SERVER_EVENTS = {
 
 const Ranking: FC = () => {
 	const { teams, update } = rankingState();
+	const { push } = useRouter();
 
 	socket.on(SERVER_EVENTS.UPDATE_RANKS, ({ ranking }) => {
 		update(ranking);
 	});
-	
+
 	useEffect(() => {
-		socket.emit("update");
+		push("/teams");
 	}, []);
 
 	return (

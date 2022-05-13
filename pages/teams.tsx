@@ -33,7 +33,7 @@ const Teams: FC = () => {
 							<button
 								onClick={() => socket.emit("update")}
 								type="button"
-								className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+								className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-black bg-white border rounded-md shadow-sm border-grey-300 hover:bg-grey-400 focus:outline-none focus:ring-2 focus:ring-grey-500 focus:ring-offset-2 sm:w-auto"
 							>
 								Reload
 							</button>
@@ -68,13 +68,13 @@ const Teams: FC = () => {
 													scope="col"
 													className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
 												>
-													Total Points
+													Total Scored Points
 												</th>
 												<th
 													scope="col"
 													className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
 												>
-													Average Points
+													Average Scored Points
 												</th>
 											</tr>
 										</thead>
