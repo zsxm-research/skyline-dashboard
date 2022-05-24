@@ -48,15 +48,18 @@ type RankingState = {
 	update: (t: Team[]) => void;
 };
 
+const sort = (a: Team, b: Team): number => {
+	const bRatio = b.won / b.loss;
+	const aRatio = a.won / a.loss;
+
+	return bRatio === aRatio ? bRatio - aRatio : b.totalPoints - a.totalPoints;
+};
+
 export const rankingState = create<RankingState>((set) => ({
 	teams: [],
 	update: (teams) =>
 		set({
-			teams: teams.sort((a, b) =>
-				b.won / b.loss != a.won / a.loss
-					? b.won / b.loss - a.won / a.loss
-					: b.totalPoints - a.totalPoints
-			),
+			teams: teams.sort((a, b) => sort(a, b)),
 		}),
 }));
 

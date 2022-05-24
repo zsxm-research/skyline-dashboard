@@ -13,11 +13,14 @@ const Teams: FC = () => {
 
 	useEffect(() => {
 		socket.emit("update");
-	}, []);
 
-	socket.on(SERVER_EVENTS.UPDATE_RANKS, ({ ranking }: { ranking: Team[] }) => {
-		update(ranking);
-	});
+		socket.on(
+			SERVER_EVENTS.UPDATE_RANKS,
+			({ ranking }: { ranking: Team[] }) => {
+				update(ranking);
+			}
+		);
+	}, []);
 
 	return (
 		<div>
